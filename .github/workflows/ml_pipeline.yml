@@ -1,0 +1,80 @@
+name: ML CI/CD Pipeline
+
+on:
+
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+
+jobs:
+
+  ml-pipeline:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      # -------------------------
+      # 1. Get repository code
+      # -------------------------
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+
+      # -------------------------
+      # 2. Install Python
+      # -------------------------
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+
+        with:
+          python-version: "3.11"
+
+
+      # -------------------------
+      # 3. Install dependencies
+      # -------------------------
+
+      - name: Install dependencies
+        run: |
+
+          pip install -r requirements.txt
+
+
+      # -------------------------
+      # 4. Run tests
+      # -------------------------
+
+      - name: Run tests
+        run: |
+
+          pytest
+
+
+      # -------------------------
+      # 5. Train and evaluate
+      # -------------------------
+
+      - name: Train model
+        run: |
+
+          python src/train.py
+
+
+      # -------------------------
+      # 6. Upload model artifact
+      # -------------------------
+
+      - name: Upload model artifact
+        uses: actions/upload-artifact@v4
+
+        with:
+          name: trained-model
+          path: artifacts/model.pkl
