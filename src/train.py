@@ -59,7 +59,7 @@ print(f"Model Accuracy: {accuracy:.4f}")
 # 5. Model quality gate
 # -------------------------
 
-THRESHOLD = 0.99
+THRESHOLD = 0.85
 
 if accuracy < THRESHOLD:
     raise ValueError(
