@@ -10,7 +10,7 @@ app = FastAPI(
 
 # Load trained model
 model = joblib.load(
-    "model.pkl"
+    "artifacts/model.pkl"
 )
 
 
